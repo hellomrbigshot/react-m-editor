@@ -6309,9 +6309,9 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
-lodash.template@^4.2.4, lodash.template@^4.4.0:
+lodash.template@^4.5.0, lodash.template@^4.5.0:
   version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
+  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.5.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
   integrity sha1-5zoDhcg1VZF0bgILmWecaQ5o+6A=
   dependencies:
     lodash._reinterpolate "~3.0.0"
@@ -7783,7 +7783,7 @@ postcss-initial@^3.0.0:
   resolved "https://registry.yarnpkg.com/postcss-initial/-/postcss-initial-3.0.0.tgz#1772512faf11421b791fb2ca6879df5f68aa0517"
   integrity sha512-WzrqZ5nG9R9fUtrA+we92R4jhVvEB32IIRTzfIG/PLL8UV4CvbF1ugTEHEFX6vWxl41Xt5RTCJPEZkuWzrOM+Q==
   dependencies:
-    lodash.template "^4.2.4"
+    lodash.template "^4.5.0"
     postcss "^7.0.2"
 
 postcss-lab-function@^2.0.1:
@@ -10508,7 +10508,7 @@ workbox-build@^4.3.1:
     common-tags "^1.8.0"
     fs-extra "^4.0.2"
     glob "^7.1.3"
-    lodash.template "^4.4.0"
+    lodash.template "^4.5.0"
     pretty-bytes "^5.1.0"
     stringify-object "^3.3.0"
     strip-comments "^1.0.2"

@@ -57,5 +57,11 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "highlight.js": "^9.15.10",
+    "marked": "^0.7.0",
+    "node-sass": "^4.12.0"
+  }
 }

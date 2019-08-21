@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 
-import ExampleComponent from 'react-m-editor'
+import MEditor from 'react-m-editor'
+// import { text } from './example'
 
 export default class App extends Component {
   render () {
     return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
+      <div style={{margin: '50px auto', width: '90%'}}>
+        <MEditor value='hello world'/>
       </div>
     )
   }

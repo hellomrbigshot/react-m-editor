@@ -12,9 +12,12 @@ export default class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div style={{margin: '20px auto', width: '90%'}}>
-          <MEditor value='hello world'/>
+          <MEditor value='hello world' onChange={(contentObj) => this.handleChange(contentObj)}/>
         </div>
       </div>
     )
+  }
+  handleChange (content) {
+    console.log(content)
   }
 }

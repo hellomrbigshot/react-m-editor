@@ -33,14 +33,14 @@ export default class MEditor extends Component {
     value: PropTypes.string,
     placeholder: PropTypes.string,
     fullScreen: PropTypes.bool,
-    mode: PropTypes.string
+    mode: PropTypes.string,
+    onChange: PropTypes.func
   }
   static defaultProps = {
     value: '',
     fullScreen: false,
     placeholder: '请输入内容',
     mode: 'live'
-
   }
 
   constructor(props) {
@@ -55,7 +55,7 @@ export default class MEditor extends Component {
     }
   }
   render() {
-    const { value, columnLength, placeholder, iconLength, mode, fullScreen } = this.state
+    const { value, columnLength, placeholder, iconLength, mode, fullScreen, onChange } = this.state
     return (
       <div className={classnames('editor', fullScreen && 'editor-fullscreen')} ref={editor => { this.mEditor = editor }}>
         <Toolbar
@@ -151,6 +151,7 @@ export default class MEditor extends Component {
       value
     }, () => {
       this.getColumnLines()
+      this.props.onChange({ content: value, htmlContent: marked(value) })
     })
   }
   getColumnLines = () => { // get column length

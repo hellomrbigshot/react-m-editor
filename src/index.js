@@ -37,7 +37,6 @@ export default class MEditor extends Component {
     onChange: PropTypes.func
   }
   static defaultProps = {
-    value: '',
     fullScreen: false,
     placeholder: '请输入内容',
     mode: 'live'

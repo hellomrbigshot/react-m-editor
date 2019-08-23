@@ -180,16 +180,16 @@ export default class MEditor extends Component {
       fullScreen: !this.state.fullScreen
     })
   }
-  handleAppendContent = (content) => {
+  handleAppendContent = (str) => {
     const pos = this.mTextarea.selectionStart
     const { value, onChange } = this.props
     if (pos > -1) {
-      const content = `${value.slice(0, pos)}${content}${value.slice(pos)}`
+      const content = `${value.slice(0, pos)}${str}${value.slice(pos)}`
       onChange(content)
       this.mTextarea.blur()
       setTimeout(() => {
-        this.mTextarea.selectionStart = pos + content.length
-        this.mTextarea.selectionEnd = pos + content.length
+        this.mTextarea.selectionStart = pos + str.length
+        this.mTextarea.selectionEnd = pos + str.length
         this.mTextarea.focus()
       })
     }

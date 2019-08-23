@@ -20,7 +20,7 @@ export default class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div style={{margin: '20px auto', width: '90%'}}>
-          <MEditor value={ value } onChange={(contentObj) => this.handleChange(contentObj)}/>
+          <MEditor value={ value } onChange={(content) => this.handleChange(content)}/>
         </div>
       </div>
     )
@@ -32,10 +32,9 @@ export default class App extends Component {
       })
     }, 200)
   }
-  handleChange (content) {
-    console.log(content)
+  handleChange (value) {
     this.setState({
-      value: content.content
+      value
     })
   }
 }

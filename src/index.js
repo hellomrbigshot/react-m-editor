@@ -42,7 +42,6 @@ export default class MEditor extends Component {
     placeholder: '请输入内容',
     mode: 'live'
   }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -160,7 +159,8 @@ export default class MEditor extends Component {
   }
   handleValueChange = (e) => { // get value
     const value = e.target.value
-    this.props.onChange({ content: value, htmlContent: marked(value) })
+    const { onChange } = this.props
+    onChange(value)
   }
   getColumnLines = () => { // get column length
     const { value } = this.props
@@ -185,7 +185,7 @@ export default class MEditor extends Component {
     const { value, onChange } = this.props
     if (pos > -1) {
       const content = `${value.slice(0, pos)}${content}${value.slice(pos)}`
-      onChange({ content, htmlContent: marked(content)  })
+      onChange(content)
       this.mTextarea.blur()
       setTimeout(() => {
         this.mTextarea.selectionStart = pos + content.length

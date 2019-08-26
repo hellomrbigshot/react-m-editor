@@ -4,7 +4,7 @@ import '../assets/css/column.scss'
 
 export default function SideColumn (props) {
   const { length } = props
-  return (<ul className='editor-content-edit-column'>{
+  return (<ul className='editor-content-edit-line-num'>{
     new Array(length).fill('').map((item, i) => (
       <li key={i}>{i + 1}</li>
     ))

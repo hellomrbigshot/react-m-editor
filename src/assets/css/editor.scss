@@ -50,7 +50,6 @@
   color: $light-preview-color;
   padding: 10px!important;
 }
-
 .editor-content-edit {
   background: $light-background;
   &-block {
@@ -85,8 +84,8 @@
       }
       textarea {
           position: absolute;
-          color: #2c3e50;
-          background:$light-background;
+          color: $light-color;
+          background: $light-background;
           top: 0;
           bottom: 0;
           overflow: hidden;
@@ -96,6 +95,15 @@
           z-index: 2;
           height: 100%;
       }
+  }
+}
+.dark-editor {
+  .editor-content-edit {
+    background: $dark-background;
+    textarea {
+      background: $dark-background;
+      color: $dark-color;
+    }
   }
 }
 .editor-fullscreen {

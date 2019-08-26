@@ -33,15 +33,19 @@ export default class MEditor extends Component {
     value: PropTypes.string,
     placeholder: PropTypes.string,
     fullScreen: PropTypes.bool,
-    mode: PropTypes.string,
+    showLineNum: PropTypes.bool,
+    mode: PropTypes.oneOf(['live', 'edit', 'preview']),
+    theme: PropTypes.oneOf(['light', 'dark']),
     onChange: PropTypes.func
   }
   static defaultProps = {
     fullScreen: false,
+    showLineNum: true,
     placeholder: '请输入内容',
-    mode: 'live'
+    mode: 'live',
+    theme: 'light'
   }
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       mode: props.mode,
@@ -50,11 +54,14 @@ export default class MEditor extends Component {
       iconLength: config.length
     }
   }
-  render() {
+  render () {
     const { columnLength, iconLength, mode, fullScreen } = this.state
-    const { value, placeholder } = this.props
+    const { value, placeholder, theme, showLineNum } = this.props
     return (
-      <div className={classnames('editor', fullScreen && 'editor-fullscreen')} ref={editor => { this.mEditor = editor }}>
+      <div
+        className={classnames('editor', `${theme}-editor`, fullScreen && 'editor-fullscreen')}
+        ref={editor => { this.mEditor = editor }}
+      >
         <Toolbar
           iconLength={iconLength}
           mode={mode}
@@ -77,7 +84,13 @@ export default class MEditor extends Component {
             onScroll={this.throttleScroll}
           >
             <div className='editor-content-edit-block'>
-              <Column length={columnLength} />
+              {
+                showLineNum ? (
+                  <Column
+                    length={columnLength}
+                  />
+                ) : null
+              }
               <div className='editor-content-edit-input'>
                 <div ref={input => { this.inputPre = input }}>{value.replace(/\n$/, '\n ')}</div>
                 <textarea
@@ -122,7 +135,7 @@ export default class MEditor extends Component {
       }, 200)
     }
   }
-  componentWillUnmount () {
+  componentWillUnmount () { // remove resize
     window.removeEventListener('resize', this.throttleResize)
   }
   handleScroll = () => { // scroll
@@ -179,7 +192,7 @@ export default class MEditor extends Component {
       fullScreen: !this.state.fullScreen
     })
   }
-  handleAppendContent = (str) => {
+  handleAppendContent = (str) => { // append content
     const pos = this.mTextarea.selectionStart
     const { value, onChange } = this.props
     if (pos > -1) {

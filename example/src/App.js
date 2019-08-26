@@ -8,7 +8,7 @@ export default class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: ''
+      value: 'hello world'
     }
   }
 
@@ -20,7 +20,10 @@ export default class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <div style={{margin: '20px auto', width: '90%'}}>
-          <MEditor value={ value } onChange={(content) => this.handleChange(content)}/>
+          <MEditor
+            value={ value }
+            onChange={(content) => this.handleChange(content)}
+          />
         </div>
       </div>
     )

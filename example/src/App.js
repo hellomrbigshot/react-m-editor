@@ -36,6 +36,7 @@ export default class App extends Component {
     }, 200)
   }
   handleChange (value) {
+    console.log(value)
     this.setState({
       value
     })

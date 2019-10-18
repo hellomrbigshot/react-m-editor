@@ -1,6 +1,7 @@
 import React from 'react'
 import { config } from '../assets/js/config'
 import PropTypes from 'prop-types'
+import ToolTip from './ToolTip'
 import '../assets/css/icon.css'
 import '../assets/css/toolbar.scss'
 
@@ -32,11 +33,33 @@ function Toolbar (props) {
         config.map((item, key) => {
           return item.showIcon && key < iconLength ? (
             <li key={key}>
-              <span
-                className={classnames('iconfont', item.icon)}
-                title={item.title}
-                onClick={() => { appendContent(item.content) }}
-              />
+              {
+                item.children && item.children.length
+                  ? <ToolTip>
+                    <span
+                      className={classnames('iconfont', item.icon)}
+                      title={item.title}
+                    />
+                    <div>
+                      {
+                        item.children.map((_item, j) => (
+                          <div key={j}>
+                            <span
+                              style={{fontSize: `${_item.size}px`}}
+                              title={_item.title}
+                              onClick={() => { appendContent(_item.content) }}
+                            >{_item.text}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </ToolTip>
+                  : <span
+                    className={classnames('iconfont', item.icon)}
+                    title={item.title}
+                    onClick={() => { appendContent(item.content) }}
+                  />
+              }
             </li>
           ) : null
         })
@@ -53,7 +76,10 @@ function Toolbar (props) {
       {
         modeConfig.map((item, i) => (
           <li key={i}>
-            <span className={classnames('iconfont', item.icon, mode === item.mode && 'muted')} onClick={() => { modeChange(item.mode) }} />
+            <span
+              className={classnames('iconfont', item.icon, mode === item.mode && 'muted')}
+              onClick={() => { modeChange(item.mode) }}
+            />
           </li>
         ))
       }

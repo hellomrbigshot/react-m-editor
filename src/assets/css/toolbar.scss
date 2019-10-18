@@ -10,26 +10,26 @@
     li {
       width: 30px;
       margin: 5px 3px 5px 3px!important;
-      span {
-        line-height: 20px;
-        font-size: 15px;
-        padding: 5px;
-        display: block;
-        color: #2c3e50;
-        text-align: center;
+    }
+    span {
+      line-height: 20px;
+      font-size: 15px;
+      padding: 5px!important;
+      display: block;
+      color: #2c3e50;
+      text-align: center;
+      &:hover {
+        color: #64b587;
+        background: #f6f6f6;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      &.muted {
+        background: #efefef;
+        color: #ddd;
         &:hover {
-          color: #64b587;
-          background: #f6f6f6;
-          cursor: pointer;
-          border-radius: 5px;
-        }
-        &.muted {
-          background: #efefef;
+          cursor: default;
           color: #ddd;
-          &:hover {
-            cursor: default;
-            color: #ddd;
-          }
         }
       }
     }

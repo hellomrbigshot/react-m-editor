@@ -28,7 +28,11 @@ class Example extends Component {
   }
   render () {
     return (
-      <MEditor onChange={() => this.handleChange(value)} />
+      <MEditor
+        theme='dark'
+        showLineNum={false}
+        onChange={() => this.handleChange(value)}
+      />
     )
   }
   handleChange (value) {
@@ -50,6 +54,7 @@ class Example extends Component {
 | name       | type   | default     | description     |
 | ---------- | -------| ----------- | --------------- |
 | value      | String |             | value           |
+| contentType| String | markdown    | markdown or html |
 | placeholder| String | 请输入……     | placehoder      |
 | mode       | String | live        | one of ['live', 'edit', 'preview']|
 | fullScreen | Boolean| false       | full screen     |

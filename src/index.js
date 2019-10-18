@@ -5,8 +5,8 @@ import classnames from 'classnames'
 import hljs from './assets/js/hljs'
 import { throttle } from './assets/js/util'
 import { config } from './assets/js/config'
-import Toolbar from './components/toolbar'
-import Column from './components/column'
+import ToolBar from './components/ToolBar'
+import Column from './components/Column'
 
 import './assets/css/editor.scss'
 import './assets/css/preview.scss'
@@ -33,6 +33,7 @@ export default class MEditor extends Component {
     value: PropTypes.string,
     placeholder: PropTypes.string,
     fullScreen: PropTypes.bool,
+    contentType: PropTypes.oneOf(['markdown', 'html']),
     showLineNum: PropTypes.bool,
     mode: PropTypes.oneOf(['live', 'edit', 'preview']),
     theme: PropTypes.oneOf(['light', 'dark']),
@@ -43,7 +44,8 @@ export default class MEditor extends Component {
     showLineNum: true,
     placeholder: '请输入内容',
     mode: 'live',
-    theme: 'light'
+    theme: 'light',
+    contentType: 'markdown'
   }
   constructor (props) {
     super(props)
@@ -53,66 +55,6 @@ export default class MEditor extends Component {
       columnLength: 1,
       iconLength: config.length
     }
-  }
-  render () {
-    const { columnLength, iconLength, mode, fullScreen } = this.state
-    const { value, placeholder, theme, showLineNum } = this.props
-    return (
-      <div
-        className={classnames('editor', `${theme}-editor`, fullScreen && 'editor-fullscreen')}
-        ref={editor => { this.mEditor = editor }}
-      >
-        <Toolbar
-          iconLength={iconLength}
-          mode={mode}
-          fullScreen={fullScreen}
-          modeChange={this.handleModeChange}
-          fullScreenChange={this.handleFullScreenChange}
-          appendContent={this.handleAppendContent}
-        />
-        <div className='editor-content'>
-          <div
-            className={
-              classnames(
-                'editor-content-edit',
-                mode === 'edit' && 'active',
-                mode === 'preview' && 'inactive'
-              )
-            }
-            ref={input => { this.editWrapper = input }}
-            onMouseOver={() => { this.scrollType = 'edit' }}
-            onScroll={this.throttleScroll}
-          >
-            <div className='editor-content-edit-block'>
-              {
-                showLineNum ? (
-                  <Column
-                    length={columnLength}
-                  />
-                ) : null
-              }
-              <div className='editor-content-edit-input'>
-                <div ref={input => { this.inputPre = input }}>{value.replace(/\n$/, '\n ')}</div>
-                <textarea
-                  onChange={this.handleValueChange}
-                  value={value}
-                  placeholder={placeholder}
-                  ref={input => { this.mTextarea = input }}
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            className={classnames('editor-content-preview', mode === 'preview' && 'active', mode === 'edit' && 'inactive')}
-            ref={input => { this.previewWrapper = input }}
-            onMouseOver={() => { this.scrollType = 'preview' }}
-            onScroll={this.throttleScroll}
-          >
-            <div className='m-editor-preview' dangerouslySetInnerHTML={{__html: marked(value)}} />
-          </div>
-        </div>
-      </div>
-    )
   }
   componentDidMount () {
     this.throttleResize = throttle(this.handleResize, 100, this)
@@ -171,8 +113,8 @@ export default class MEditor extends Component {
   }
   handleValueChange = (e) => { // get value
     const value = e.target.value
-    const { onChange } = this.props
-    onChange(value)
+    const { onChange, contentType } = this.props
+    onChange(contentType === 'markdown' ? value : marked(value))
   }
   getColumnLines = () => { // get column length
     const { value } = this.props
@@ -205,5 +147,75 @@ export default class MEditor extends Component {
         this.mTextarea.focus()
       })
     }
+  }
+  handleKeyPress = (e) => { // key press event
+    const TABKEY = 9
+    if (e.keyCode === TABKEY) { // 自定义 tab 事件
+      this.handleAppendContent('    ')
+      if (e.preventDefault) {
+        e.preventDefault()
+      }
+    }
+  }
+  render () {
+    const { columnLength, iconLength, mode, fullScreen } = this.state
+    const { value, placeholder, theme, showLineNum } = this.props
+    return (
+      <div
+        className={classnames('editor', `${theme}-editor`, fullScreen && 'editor-fullscreen')}
+        ref={editor => { this.mEditor = editor }}
+      >
+        <ToolBar
+          iconLength={iconLength}
+          mode={mode}
+          fullScreen={fullScreen}
+          modeChange={this.handleModeChange}
+          fullScreenChange={this.handleFullScreenChange}
+          appendContent={this.handleAppendContent}
+        />
+        <div className='editor-content'>
+          <div
+            className={
+              classnames(
+                'editor-content-edit',
+                mode === 'edit' && 'active',
+                mode === 'preview' && 'inactive'
+              )
+            }
+            ref={input => { this.editWrapper = input }}
+            onMouseOver={() => { this.scrollType = 'edit' }}
+            onScroll={this.throttleScroll}
+          >
+            <div className='editor-content-edit-block'>
+              {
+                showLineNum ? (
+                  <Column
+                    length={columnLength}
+                  />
+                ) : null
+              }
+              <div className='editor-content-edit-input'>
+                <div ref={input => { this.inputPre = input }}>{value.replace(/\n$/, '\n ')}</div>
+                <textarea
+                  onChange={this.handleValueChange}
+                  value={value}
+                  placeholder={placeholder}
+                  ref={input => { this.mTextarea = input }}
+                  onKeyDown={this.handleKeyPress}
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className={classnames('editor-content-preview', mode === 'preview' && 'active', mode === 'edit' && 'inactive')}
+            ref={input => { this.previewWrapper = input }}
+            onMouseOver={() => { this.scrollType = 'preview' }}
+            onScroll={this.throttleScroll}
+          >
+            <div className='m-editor-preview' dangerouslySetInnerHTML={{__html: marked(value)}} />
+          </div>
+        </div>
+      </div>
+    )
   }
 }

@@ -2,7 +2,9 @@
 
 > A markdown editor with React.js
 
-[![NPM](https://img.shields.io/npm/v/react-m-editor.svg)](https://www.npmjs.com/package/react-m-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/hellomrbigshot/react-m-editor)
+![GitHub](https://img.shields.io/github/license/hellomrbigshot/react-m-editor)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
 ## Install
@@ -11,7 +13,7 @@
 yarn add react-m-editor
 ```
 
-## Usage
+## Usage with React
 
 
 ```jsx

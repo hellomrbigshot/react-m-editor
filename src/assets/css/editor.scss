@@ -20,8 +20,7 @@
 .editor {
   display: flex;
   flex-direction: column;
-  border: 1px solid #eee;
-  box-shadow: 0 0 12px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 5px 0 $light-box-shadow;
   height: 500px;
   border-radius: 8px;
 }
@@ -51,7 +50,7 @@
   padding: 10px!important;
 }
 .editor-content-edit {
-  background: $light-background;
+  background: $light-bg;
   &-block {
       display: flex;
       overflow: hidden;
@@ -62,7 +61,7 @@
       position: relative;
       flex: 1 1 0;
       line-height: 30px;
-      background: $light-background;
+      background: $light-bg;
       min-height: 100%;
       overflow: hidden;
       div, textarea {
@@ -85,7 +84,7 @@
       textarea {
           position: absolute;
           color: $light-color;
-          background: $light-background;
+          background: $light-bg;
           top: 0;
           bottom: 0;
           overflow: hidden;
@@ -98,10 +97,11 @@
   }
 }
 .dark-editor {
+  box-shadow: 0 0 2px 2px $dark-box-shadow;
   .editor-content-edit {
-    background: $dark-background;
+    background: $dark-bg;
     textarea {
-      background: $dark-background;
+      background: $dark-bg;
       color: $dark-color;
     }
   }

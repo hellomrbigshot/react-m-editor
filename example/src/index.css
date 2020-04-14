@@ -1,5 +1,11 @@
+* {
+  padding: 0;
+  margin: 0;
+}
 .App {
   text-align: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -9,7 +15,7 @@
 }
 
 .App-header {
-  min-height: 30vh;
+  min-height: 25vh;
   display: flex;
   flex-direction: column;
   align-items: center;

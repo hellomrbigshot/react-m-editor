@@ -1,3 +1,4 @@
+@import './color.scss';
 .tooltip-wrapper {
   position: relative;
 }
@@ -6,11 +7,11 @@
   left: 0;
   margin-top: 5px!important;
   padding: 5px 3px;
-  background: #fff;
+  background: $light-bg;
   height: 0;
   opacity: 0;
   z-index: 10;
-  box-shadow: 0 0 0 1px #efefef;
+  box-shadow: 0 0 0 1px $light-toolbar-border;
   border-radius: 3px;
   overflow: hidden;
   li {
@@ -26,4 +27,10 @@
     opacity: 1;
   }
   transition: all .5s ease-in-out;
+}
+.dark-editor {
+  .tooltip-content {
+    background: $dark-bg;
+    box-shadow: 0 0 0 1px $dark-toolbar-border;
+  }
 }

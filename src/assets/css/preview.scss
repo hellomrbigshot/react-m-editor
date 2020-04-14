@@ -26,17 +26,19 @@
     margin: 1.5em 0;
   }
   code {
-    background: #f0f0f0;
+    background: #000;
+    color: #fff;
     padding: 5px;
     border-radius: 4px;
     font-family: Consolas, Monaco, monospace;
   }
   pre {
-    background: #f0f0f0;
+    background: #000;
+    width: 100%;
     margin: 1em 0;
     padding: 1em;
     overflow-x: auto;
-    width: 100%;
+    
     code {
       // padding: 0.5em;
       font-family: Consolas, Monaco, monospace;

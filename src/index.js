@@ -10,7 +10,7 @@ import Column from './components/Column'
 
 import './assets/css/editor.scss'
 import './assets/css/preview.scss'
-import './assets/css/tomorrow.css'
+import './assets/css/xt256.scss'
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -44,7 +44,7 @@ export default class MEditor extends Component {
     showLineNum: true,
     placeholder: '请输入内容',
     mode: 'live',
-    theme: 'light',
+    theme: 'dark',
     contentType: 'markdown'
   }
   constructor (props) {

@@ -20,26 +20,29 @@
   }
   blockquote {
     border-left: 2px solid #009a61;
-    color: #555;
+    color: #333;
     font-size: 1em;
     padding: 0.5em 1em;
     margin: 1.5em 0;
+    background: #f8f8f8;
+    border-radius: 3px;
   }
   code {
-    background: #000;
-    color: #fff;
-    padding: 5px;
+    background: #051626;
+    color: #eee;
+    padding: 0 3px;
     border-radius: 4px;
     font-family: Consolas, Monaco, monospace;
   }
   pre {
-    background: #000;
+    background: #051626;
     width: 100%;
     margin: 1em 0;
     padding: 1em;
     overflow-x: auto;
-    
+    border-radius: 3px;
     code {
+      font-size: 14px;
       // padding: 0.5em;
       font-family: Consolas, Monaco, monospace;
       padding: 0;

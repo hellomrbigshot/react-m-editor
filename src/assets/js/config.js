@@ -8,25 +8,25 @@ const config = [
         text: 'H1',
         size: 32,
         title: '一级标题',
-        content: '# h1'
+        content: '\n# h1'
       },
       {
         text: 'H2',
         size: 24,
         title: '二级标题',
-        content: '## h2'
+        content: '\n## h2'
       },
       {
         text: 'H3',
         size: 18,
         title: '三级标题',
-        content: '### h3'
+        content: '\n### h3'
       },
       {
         text: 'H4',
         size: 16,
         title: '四级标题',
-        content: '#### h4'
+        content: '\n#### h4'
       }
     ]
   },

@@ -1,52 +1,36 @@
-import React, { Component } from 'react'
-import MEditor from 'react-m-editor'
+import React, { useState, useEffect } from 'react'
+import { MEditor } from 'react-m-editor'
 import logo from './logo.svg'
 
 // import { text } from './example'
-
-export default class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      value: 'hello world',
-      theme: 'light'
-    }
-  }
-
-  render () {
-    const { value, theme } = this.state
-    const toggleTheme = () => {
-      this.setState({
-        theme: theme === 'light' ? 'dark' : 'light'
-      })
-    }
-    return (
-      <div className='App' style={{ background: theme === 'light' ? '#fff' : '#2a2c33' }}>
-        <button className='theme-button' onClick={ toggleTheme }>切换主题</button>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-        </header>
-        <div style={{margin: '20px auto', width: '90%'}}>
-          <MEditor
-            value={ value }
-            theme={ theme }
-            onChange={(content) => this.handleChange(content)}
-          />
-        </div>
-      </div>
-    )
-  }
-  componentDidMount () {
+export default function App () {
+  const [value, setValue] = useState('')
+  const [theme, setTheme] = useState('light')
+  useEffect(() => {
     setTimeout(() => {
-      this.setState({
-        value: 'hello world'
-      })
+      setValue('hello world')
     }, 200)
-  }
-  handleChange (value) {
+  }, [])
+  const handleChange =  (value) => {
     console.log(value)
-    this.setState({
-      value
-    })
+    setValue(value)
   }
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light')
+  }
+  return (
+    <div className='App' style={{ background: theme === 'light' ? '#fff' : '#2a2c33' }}>
+      <button className='theme-button' onClick={ toggleTheme }>切换主题</button>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
+      </header>
+      <div style={{margin: '20px auto', width: '90%'}}>
+        <MEditor
+          value={ value }
+          theme={ theme }
+          onChange={(content) => handleChange(content)}
+        />
+      </div>
+    </div>
+  )
 }

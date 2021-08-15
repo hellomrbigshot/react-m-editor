@@ -27,64 +27,68 @@ const modeConfig = [
 
 function Toolbar (props) {
   const { fullScreen, modeChange, mode, iconLength, appendContent, fullScreenChange } = props
-  return (<div className='editor-toolbar'>
-    <ul className='editor-toolbar-tools'>
-      {
-        config.map((item, key) => {
-          return item.showIcon && key < iconLength ? (
-            <li key={key}>
-              {
-                item.children && item.children.length
-                  ? <ToolTip>
-                    <span
-                      className={classnames('iconfont', item.icon)}
-                      title={item.title}
-                    />
-                    <div>
-                      {
-                        item.children.map((_item, j) => (
-                          <div key={j}>
-                            <span
-                              style={{fontSize: `${_item.size}px`}}
-                              title={_item.title}
-                              onClick={() => { appendContent(_item.content) }}
-                            >{_item.text}</span>
+  return (
+    <div className='editor-toolbar'>
+      <ul className='editor-toolbar-tools'>
+        {
+          config.map((item, key) => {
+            return item.showIcon && key < iconLength
+              ? (
+                  <li key={key}>
+                    {
+                      item.children && item.children.length
+                        ? <ToolTip>
+                          <span
+                            className={classnames('iconfont', item.icon)}
+                            title={item.title}
+                          />
+                          <div>
+                            {
+                              item.children.map((_item, j) => (
+                                <div key={j}>
+                                  <span
+                                    style={{fontSize: `${_item.size}px`}}
+                                    title={_item.title}
+                                    onClick={() => { appendContent(_item.content) }}
+                                  >{_item.text}</span>
+                                </div>
+                              ))
+                            }
                           </div>
-                        ))
-                      }
-                    </div>
-                  </ToolTip>
-                  : <span
-                    className={classnames('iconfont', item.icon)}
-                    title={item.title}
-                    onClick={() => { appendContent(item.content) }}
-                  />
-              }
+                        </ToolTip>
+                        : <span
+                          className={classnames('iconfont', item.icon)}
+                          title={item.title}
+                          onClick={() => { appendContent(item.content) }}
+                        />
+                    }
+                  </li>
+                )
+              : null
+          })
+        }
+      </ul>
+      <ul className='editor-toolbar-mode'>
+        <li>
+          <span
+            className={classnames('iconfont', !fullScreen ? 'icon-quanping' : 'icon-huanyuanhuabu')}
+            title={!fullScreen ? '全屏' : '还原'}
+            onClick={fullScreenChange}
+          />
+        </li>
+        {
+          modeConfig.map((item, i) => (
+            <li key={i}>
+              <span
+                className={classnames('iconfont', item.icon, mode === item.mode && 'muted')}
+                onClick={() => { modeChange(item.mode) }}
+              />
             </li>
-          ) : null
-        })
-      }
-    </ul>
-    <ul className='editor-toolbar-mode'>
-      <li>
-        <span
-          className={classnames('iconfont', !fullScreen ? 'icon-quanping' : 'icon-huanyuanhuabu')}
-          title={!fullScreen ? '全屏' : '还原'}
-          onClick={fullScreenChange}
-        />
-      </li>
-      {
-        modeConfig.map((item, i) => (
-          <li key={i}>
-            <span
-              className={classnames('iconfont', item.icon, mode === item.mode && 'muted')}
-              onClick={() => { modeChange(item.mode) }}
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </div>)
+          ))
+        }
+      </ul>
+    </div>
+  )
 }
 Toolbar.propTypes = {
   fullScreen: PropTypes.bool,

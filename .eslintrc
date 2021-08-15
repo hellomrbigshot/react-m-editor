@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "standard",
     "standard-react"
@@ -10,6 +10,7 @@
   "plugins": [
     "react"
   ],
+  "ignorePatterns": ["**/example/src/*.js"],
   "parserOptions": {
     "sourceType": "module"
   },
@@ -18,6 +19,8 @@
     "space-before-function-paren": 0,
 
     // allow specifying true explicitly for boolean props
-    "react/jsx-boolean-value": 0
+    "react/jsx-boolean-value": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
 }

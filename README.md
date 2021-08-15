@@ -17,31 +17,22 @@ yarn add react-m-editor
 
 
 ```jsx
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
-import MEditor from 'react-m-editor'
+import { MEditor } from 'react-m-editor'
 
-class Example extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      value: 'hello world'
-    }
+function Example () {
+  const [value, setValue] = useState('')
+  const handleChange = (value) => {
+    setValue(value)
   }
-  render () {
-    return (
-      <MEditor
-        theme='dark'
-        showLineNum={false}
-        onChange={() => this.handleChange(value)}
-      />
-    )
-  }
-  handleChange (value) {
-    this.setState({
-      value
-    })
-  }
+  return (
+    <MEditor
+      theme='dark'
+      showLineNum={false}
+      onChange={() => handleChange(value)}
+    />
+  )
 }
 ```
 

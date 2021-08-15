@@ -1,54 +1,48 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import '../assets/css/tooltip.scss'
 
-let timer = null
-export default class ToolTip extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      visible: false
-    }
-  }
-  handleMouseEnter = () => {
+function ToolTip ({ children, content }) {
+  const [visible, setVisible] = useState(false)
+  const [timer, setTimer] = useState(null)
+  const handleMouseEnter = () => {
     clearTimeout(timer)
-    if (this.state.visible === false) {
-      this.setState({
-        visible: true
-      })
+    if (visible === false) {
+      setVisible(true)
     }
   }
-  handleMouseLeave = (type) => {
+  const handleMouseLeave = (type) => {
     if (type === 'main') {
-      timer = setTimeout(() => {
-        this.setState({
-          visible: false
-        })
-      }, 100)
+      setTimer(setTimeout(() => {
+        setVisible(false)
+      }, 100))
     }
   }
-  render () {
-    // eslint-disable-next-line react/prop-types
-    const { children, content } = this.props
-    const { visible } = this.state
-    return (
+  return (
+    <div
+      className='tooltip-wrapper'
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseEnter}
+      onMouseLeave={() => handleMouseLeave('main')}
+    >
+      { Array.isArray(children) ? children[0] : children }
       <div
-        className='tooltip-wrapper'
-        onMouseEnter={this.handleMouseEnter}
-        onMouseMove={this.handleMouseEnter}
-        onMouseLeave={() => this.handleMouseLeave('main')}
+        className={classnames('tooltip-content', visible ? 'mouse-in' : '')}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => handleMouseLeave('content')}
       >
-        { Array.isArray(children) ? children[0] : children }
-        <div
-          className={classnames('tooltip-content', visible ? 'mouse-in' : '')}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={() => this.handleMouseLeave('content')}
-        >
-          {
-            content || children[1]
-          }
-        </div>
+        {
+          content || children[1]
+        }
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+ToolTip.propTypes = {
+  children: PropTypes.array,
+  content: PropTypes.string
+}
+
+export default ToolTip

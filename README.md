@@ -60,6 +60,7 @@ function Example () {
 | name     | params | description    |
 | -------  | ------ | -----------    |
 | onChange | content: String | change event |
+| onFullScreenChange | isFullScreen: Boolean | fullscreen change event |
 
 
 ## License

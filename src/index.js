@@ -28,7 +28,7 @@ marked.setOptions({
   xhtml: false
 })
 function Editor (props) {
-  const { placeholder, theme, showLineNum, value } = props
+  const { placeholder, theme, showLineNum, value, onFullScreenChange } = props
   const [mode, setMode] = useState(props.mode)
   const [fullScreen, setFullScreen] = useState(props.fullScreen)
   const [iconLength, setIconLength] = useState(config.length)
@@ -64,6 +64,9 @@ function Editor (props) {
   }
   const handleFullScreenChange = () => { // fullScreen change
     setFullScreen(!fullScreen)
+    if (onFullScreenChange) {
+      onFullScreenChange(!fullScreen)
+    }
   }
   const handleAppendContent = (str) => { // append content
     const pos = mTextarea.current.selectionStart
@@ -191,7 +194,8 @@ Editor.propTypes = {
   showLineNum: PropTypes.bool,
   mode: PropTypes.oneOf(['live', 'edit', 'preview']),
   theme: PropTypes.oneOf(['light', 'dark']),
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onFullScreenChange: PropTypes.func
 }
 
 Editor.defaultProps = {

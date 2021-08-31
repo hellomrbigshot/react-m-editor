@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { ToolTipProps } from '../index.d'
 import '../assets/css/tooltip.scss'
 
-function ToolTip ({ children, content }) {
+function ToolTip ({ children, content }: ToolTipProps) {
   const [visible, setVisible] = useState(false)
-  const [timer, setTimer] = useState(null)
   const handleMouseEnter = () => {
-    clearTimeout(timer)
     if (visible === false) {
       setVisible(true)
     }
   }
-  const handleMouseLeave = (type) => {
+  const handleMouseLeave = (type: string) => {
     if (type === 'main') {
-      setTimer(setTimeout(() => {
+      setTimeout(() => {
         setVisible(false)
-      }, 100))
+      }, 100)
     }
   }
   return (
@@ -33,7 +32,7 @@ function ToolTip ({ children, content }) {
         onMouseLeave={() => handleMouseLeave('content')}
       >
         {
-          content || children[1]
+          content || (Array.isArray(children) && children[1])
         }
       </div>
     </div>

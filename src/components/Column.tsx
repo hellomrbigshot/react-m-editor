@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import '../assets/css/column.scss'
 
-export default function SideColumn (props) {
+export default function SideColumn (props: { length: number }) {
   const { length } = props
   return (
     <ul className='editor-content-edit-line-num'>{

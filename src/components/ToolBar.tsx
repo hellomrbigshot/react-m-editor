@@ -2,6 +2,7 @@ import React from 'react'
 import { config } from '../assets/js/config'
 import PropTypes from 'prop-types'
 import ToolTip from './ToolTip'
+import { ToolBarProps } from '../index.d'
 import '../assets/css/icon.css'
 import '../assets/css/toolbar.scss'
 
@@ -25,8 +26,8 @@ const modeConfig = [
   }
 ]
 
-function Toolbar (props) {
-  const { fullScreen, modeChange, mode, iconLength, appendContent, fullScreenChange } = props
+function Toolbar (props: ToolBarProps) {
+  const { fullScreen, fullScreenChange, modeChange, mode, iconLength, appendContent } = props
   return (
     <div className='editor-toolbar'>
       <ul className='editor-toolbar-tools'>
@@ -38,29 +39,29 @@ function Toolbar (props) {
                     {
                       item.children && item.children.length
                         ? <ToolTip>
-                          <span
+                            <span
+                              className={classnames('iconfont', item.icon)}
+                              title={item.title}
+                            />
+                            <div>
+                              {
+                                item.children.map((_item, j) => (
+                                  <div key={j}>
+                                    <span
+                                      style={{fontSize: `${_item.size}px`}}
+                                      title={_item.title}
+                                      onClick={() => { appendContent(_item.content) }}
+                                    >{_item.text}</span>
+                                  </div>
+                                ))
+                              }
+                            </div>
+                          </ToolTip>
+                        : <span
                             className={classnames('iconfont', item.icon)}
                             title={item.title}
+                            onClick={() => { appendContent(item.content) }}
                           />
-                          <div>
-                            {
-                              item.children.map((_item, j) => (
-                                <div key={j}>
-                                  <span
-                                    style={{fontSize: `${_item.size}px`}}
-                                    title={_item.title}
-                                    onClick={() => { appendContent(_item.content) }}
-                                  >{_item.text}</span>
-                                </div>
-                              ))
-                            }
-                          </div>
-                        </ToolTip>
-                        : <span
-                          className={classnames('iconfont', item.icon)}
-                          title={item.title}
-                          onClick={() => { appendContent(item.content) }}
-                        />
                     }
                   </li>
                 )
@@ -73,7 +74,7 @@ function Toolbar (props) {
           <span
             className={classnames('iconfont', !fullScreen ? 'icon-quanping' : 'icon-huanyuanhuabu')}
             title={!fullScreen ? '全屏' : '还原'}
-            onClick={fullScreenChange}
+            onClick={() => { fullScreenChange(!fullScreen) }}
           />
         </li>
         {

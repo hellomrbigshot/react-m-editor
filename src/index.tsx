@@ -1,20 +1,36 @@
-import React, { useState, useEffect, useCallback, useRef, KeyboardEvent, ChangeEvent } from 'react'
+import React, { useState, useEffect, useRef, KeyboardEvent, ChangeEvent } from 'react'
 import PropTypes from 'prop-types'
-import marked from 'marked'
+import markedFun from 'marked'
 import classnames from 'classnames'
 import hljs from './assets/js/hljs'
-import throttle from 'lodash/throttle'
+import { throttle, debounce as debounceFunc } from 'lodash-es'
+
 import { config } from './assets/js/config'
 import ToolBar from './components/ToolBar'
 import Column from './components/Column'
-import { EditorProps } from './index.d'
 
 import './assets/css/editor.scss'
 import './assets/css/preview.scss'
-import './assets/css/xt256.scss'
+import './assets/css/solarized-light.scss'
 
-marked.setOptions({
-  renderer: new marked.Renderer(),
+export interface EditorProps {
+  mode: string;
+  fullScreen: boolean;
+  placeholder: string;
+  theme: string;
+  showLineNum: boolean;
+  value: string;
+  autoScroll: boolean;
+  onFullScreenChange?: Function;
+  onModeChange?: Function;
+  onChange?: Function;
+  contentType?: string;
+  debounce: boolean;
+  debounceWait?: number;
+}
+
+markedFun.setOptions({
+  renderer: new markedFun.Renderer(),
   highlight: (code) => {
     return hljs.highlightAuto(code).value
   },
@@ -28,14 +44,19 @@ marked.setOptions({
   xhtml: false
 })
 
+const betterMarked = (str: string) => { // replace <code> tags to <code class="hljs">
+  return markedFun(str).replace(/<code( class="language-[A-Za-z]*")?>/g, '<code class="hljs">')
+}
+
 
 function Editor (props: EditorProps) {
-  const { placeholder, theme, showLineNum, value, onFullScreenChange, } = props
+  const { placeholder, theme, showLineNum, value, onFullScreenChange, onModeChange, autoScroll, debounce, debounceWait, onChange } = props
   const [mode, setMode] = useState(props.mode)
   const [fullScreen, setFullScreen] = useState(props.fullScreen)
   const [iconLength, setIconLength] = useState(config.length)
   const [columnsLength, setColumnsLength] = useState(1)
   const [scrollType, setScrollType] = useState('edit')
+  const [markedHtml, setMarkedHtml] = useState('')
   const mEditor = useRef<HTMLDivElement>(null)
   const mTextarea = useRef<HTMLTextAreaElement>(null)
   const editWrapper = useRef<HTMLDivElement>(null)
@@ -47,6 +68,12 @@ function Editor (props: EditorProps) {
       getColumnLines()
     }, 200)
   }, [value, fullScreen, mode])
+
+  useEffect(() => {
+    if (value.trim()) {
+      setHtml(value)
+    }
+  }, [value])
 
   useEffect(() => { // do once when componentdidmounted
     window.addEventListener('resize', handleThrottleResize)
@@ -61,19 +88,30 @@ function Editor (props: EditorProps) {
     const length = Math.max(value.split('\n').length, (textareaHeight - 20) / 30)
     setColumnsLength(length)
   }
-  const handleModeChange = (mode: string) => { // change mode
-    setMode(mode)
+  const handleModeChange = (newMode: string) => { // change mode
+    onModeChange && onModeChange(newMode, mode)
+    setMode(newMode)
   }
   const handleFullScreenChange = (full: boolean) => { // fullScreen change
     setFullScreen(full)
     onFullScreenChange && onFullScreenChange(full)
   }
+  const setHtml = (_value: string) => {
+    if (debounce) {
+      debounceMarked.current(_value)
+    } else {
+      setMarkedHtml(betterMarked(_value))
+    }
+  }
+  const debounceMarked = useRef(debounceFunc((value) => {
+    setMarkedHtml(betterMarked(value))
+  }, debounceWait))
   const handleAppendContent = (str: string) => { // append content
     const pos = mTextarea.current!.selectionStart || 0
-    const { value, onChange } = props
     if (pos > -1) {
-      const content = `${value.slice(0, pos)}${str}${value.slice(pos)}`
-      onChange && onChange(content)
+      const content:string = `${value.slice(0, pos)}${str}${value.slice(pos)}`
+      onChange && onChange({ content, htmlContent: betterMarked(content) })
+      // setHtml(content)
       mTextarea.current!.blur()
       setTimeout(() => {
         mTextarea.current!.selectionStart = pos + str.length
@@ -82,7 +120,8 @@ function Editor (props: EditorProps) {
       })
     }
   }
-  const handleScroll = useCallback(throttle(() => { // scroll
+
+  const handleScroll = autoScroll ? throttle(() => { // scroll
     const editWrapperMaxScrollTop = editWrapper.current!.scrollHeight - editWrapper.current!.clientHeight
     const previewWrapperMaxScrollTop = previewWrapper.current!.scrollHeight - previewWrapper.current!.clientHeight
     if (scrollType === 'edit') {
@@ -90,7 +129,7 @@ function Editor (props: EditorProps) {
     } else if (scrollType === 'preview') {
       editWrapper.current!.scrollTop = (previewWrapper.current!.scrollTop / previewWrapperMaxScrollTop) * editWrapperMaxScrollTop
     }
-  }, 30), [])
+  }, 200) : undefined
   const handleResize = () => { // resize
     const width = mEditor.current!.clientWidth
     let iconLength: number = 0
@@ -110,14 +149,14 @@ function Editor (props: EditorProps) {
   }
   const handleThrottleResize = throttle(handleResize, 300)
   const handleValueChange = (e: ChangeEvent<HTMLTextAreaElement>) => { // get value
-    const value = e.target.value
-    const { onChange, contentType } = props
-    onChange && onChange(contentType === 'markdown' ? value : marked(value))
+    const content = e.target.value
+    onChange && onChange({ content, htmlContent: betterMarked(content) })
+    // setHtml(content)
   }
 
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => { // key press event
     const TABKEY = 'Tab'
-    if (e.code === TABKEY) { // 自定义 tab 事件
+    if (e.code === TABKEY) { // tab event
       handleAppendContent('    ')
       if (e.preventDefault) {
         e.preventDefault()
@@ -147,7 +186,7 @@ function Editor (props: EditorProps) {
             )
           }
           ref={editWrapper}
-          onMouseOver={() => { setScrollType('edit') }}
+          onMouseEnter={() => { setScrollType('edit') }}
           onScroll={handleScroll}
         >
           <div className='editor-content-edit-block'>
@@ -175,10 +214,10 @@ function Editor (props: EditorProps) {
         <div
           className={classnames('editor-content-preview', mode === 'preview' && 'active', mode === 'edit' && 'inactive')}
           ref={previewWrapper}
-          onMouseOver={() => { setScrollType('preview') }}
+          onMouseEnter={() => { setScrollType('preview') }}
           onScroll={handleScroll}
         >
-          <div className='m-editor-preview' dangerouslySetInnerHTML={{__html: marked(value)}} />
+          <div className='m-editor-preview' dangerouslySetInnerHTML={{__html: markedHtml}} />
         </div>
       </div>
     </div>
@@ -193,18 +232,26 @@ Editor.propTypes = {
   showLineNum: PropTypes.bool,
   mode: PropTypes.oneOf(['live', 'edit', 'preview']),
   theme: PropTypes.oneOf(['light', 'dark']),
+  autoScroll: PropTypes.bool,
   onChange: PropTypes.func,
-  onFullScreenChange: PropTypes.func
+  onFullScreenChange: PropTypes.func,
+  onModeChange: PropTypes.func,
+  debounce: PropTypes.bool,
+  debounceWait: PropTypes.number
 }
 
 Editor.defaultProps = {
   fullScreen: false,
   showLineNum: true,
-  placeholder: '请输入内容',
+  placeholder: '',
   mode: 'live',
   theme: 'dark',
   contentType: 'markdown',
-  value: ''
+  value: '',
+  autoScroll: true,
+  debounce: false,
+  debounceWait: 200
 }
 
 export const MEditor = Editor
+export const marked = betterMarked

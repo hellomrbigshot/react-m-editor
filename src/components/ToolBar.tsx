@@ -2,11 +2,19 @@ import React from 'react'
 import { config } from '../assets/js/config'
 import PropTypes from 'prop-types'
 import ToolTip from './ToolTip'
-import { ToolBarProps } from '../index.d'
 import '../assets/css/icon.css'
 import '../assets/css/toolbar.scss'
 
 import classnames from 'classnames'
+
+export interface ToolBarProps {
+  fullScreen: boolean;
+  mode: string;
+  iconLength: number;
+  appendContent: Function;
+  fullScreenChange: Function;
+  modeChange: Function;
+}
 
 const modeConfig = [
   {

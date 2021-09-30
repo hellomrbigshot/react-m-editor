@@ -26,6 +26,18 @@
 .App-link {
   color: #61dafb;
 }
+.theme-button {
+  cursor: pointer;
+  padding: 5px;
+  background: #fff;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 1px 1px #222;
+  border-radius: 3px;
+}
+.theme-button:hover {
+  background: #efefef;
+}
 
 @keyframes App-logo-spin {
   from {

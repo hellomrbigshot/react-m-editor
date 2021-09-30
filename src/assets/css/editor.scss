@@ -1,7 +1,7 @@
 @import './color.scss';
 
 .editor {
-  span, code, a, input, em, s, strong, small, cite, q, abbr, dfn, data, time, var, samp, sub, sup, 
+  span, code, a, input, em, s, strong, small, cite, q, abbr, dfn, data, time, var, samp, sub, sup,
   kbd, i, b, u, mark, ruby, rt, rb, bdi, bdo, br, wbr, ins, del,
   footer, address, main, article, nav, body, section, aside, header, h1, h2, h3, h4, h5, h6,
   div, p, pre, hr, blockquote, ol, li, ul, dl, dt, dd, figure, figcaption,
@@ -57,7 +57,6 @@
       min-height: 100%;
   }
   &-input {
-      margin-left: 10px!important;
       position: relative;
       flex: 1 1 0;
       line-height: 30px;
@@ -73,7 +72,7 @@
         width: 100%;
         font-family: inherit;
         font-size: 14px;
-        padding: 10px 0;
+        padding: 10px;
         display: block;
         line-height: inherit;
       }
@@ -100,6 +99,9 @@
   box-shadow: 0 0 2px 2px $dark-box-shadow;
   .editor-content-edit {
     background: $dark-bg;
+    &-input {
+      background: $dark-bg;
+    }
     textarea {
       background: $dark-bg;
       color: $dark-color;

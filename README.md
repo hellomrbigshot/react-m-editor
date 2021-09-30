@@ -15,25 +15,42 @@ yarn add react-m-editor
 
 ## Usage with React
 
+Use the component
 
 ```jsx
 import React, { useState } from 'react'
 
 import { MEditor } from 'react-m-editor'
+import 'react-m-editor/dist/index.min.css'
 
 function Example () {
   const [value, setValue] = useState('')
-  const handleChange = (value) => {
-    setValue(value)
+  const handleChange = ({ content, htmlContent }) => {
+    setValue(content)
+    console.log(htmlContent)
   }
   return (
     <MEditor
       theme='dark'
       showLineNum={false}
-      onChange={() => handleChange(value)}
+      onChange={() => handleChange(contentObj)}
     />
   )
 }
+```
+
+The component also exports ```marked``` function:
+
+```javascript
+// The marked funciton will replace
+// <code> or <code class="language-*"> tag
+// to <code class="hljs">
+
+import { marked } from 'react-m-editor'
+
+let a = '```console.log('hello world')```'
+console.log(marked(a)) // <p><code class="hljs">console.log(&#39;hello world&#39;)</code></p>
+
 ```
 
 ## Preview
@@ -46,22 +63,18 @@ function Example () {
 
 | name       | type   | default     | description     |
 | ---------- | -------| ----------- | --------------- |
-| value      | String |             | value           |
-| contentType| String | markdown    | markdown or html |
-| placeholder| String | 请输入……     | placehoder      |
-| mode       | String | live        | one of ['live', 'edit', 'preview']|
-| fullScreen | Boolean| false       | full screen     |
-| showLineNum| Boolean| true        | show side line number |
-| theme      | String | light       | light or dark   |
-
-
-### event
-
-| name     | params | description    |
-| -------  | ------ | -----------    |
-| onChange | content: String | change event |
-| onFullScreenChange | isFullScreen: Boolean | fullscreen change event |
-
+| value      | string |   -         | value           |
+| placeholder| string |   -         | placehoder      |
+| mode       | live \| edit \| preview | live      | edit mode |
+| fullScreen | boolean| false       | full screen     |
+| showLineNum| boolean| true        | show side line number |
+| theme      | string | light       | light or dark   |
+| autoScroll | boolean| true        | auto sroll or not |
+| debounce   | boolean | false | debounce render html when edit |
+| debounceWait | number | 200 | debounce wait time |
+| onChange   | function ({ content, htmlContent }) | - | callback when editor changes |
+| onModeChange | function (mode, oldMode) | - | callback when editor's mode changes |
+| onFullScreenChange | function (isFullScreen) | - | callback when editor's fullscreen changes |
 
 ## License
 

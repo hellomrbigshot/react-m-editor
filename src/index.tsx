@@ -70,9 +70,7 @@ function Editor (props: EditorProps) {
   }, [value, fullScreen, mode])
 
   useEffect(() => {
-    if (value.trim()) {
-      setHtml(value)
-    }
+    setHtml(value)
   }, [value])
 
   useEffect(() => { // do once when componentdidmounted

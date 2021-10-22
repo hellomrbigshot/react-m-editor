@@ -247,7 +247,7 @@ Editor.defaultProps = {
   contentType: 'markdown',
   value: '',
   autoScroll: true,
-  debounce: false,
+  debounceRender: false,
   debounceRenderWait: 200
 }
 

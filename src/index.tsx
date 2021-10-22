@@ -25,8 +25,8 @@ export interface EditorProps {
   onModeChange?: Function;
   onChange?: Function;
   contentType?: string;
-  debounce: boolean;
-  debounceWait?: number;
+  debounceRender: boolean;
+  debounceRenderWait?: number;
 }
 
 markedFun.setOptions({

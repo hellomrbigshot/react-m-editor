@@ -45,6 +45,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: yarn deploy
+      - name: gh-pages
+        working-directory: ./example
+        run: |
+            yarn install
+            yarn build
+            gh-pages -d build
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

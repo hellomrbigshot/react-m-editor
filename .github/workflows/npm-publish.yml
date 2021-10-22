@@ -35,7 +35,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   create-githubpage:
-    needs: build
+    needs: publish-npm
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -49,6 +49,7 @@ jobs:
         working-directory: ./example
         run: |
             yarn install
+            yarn add react-m-editor
             yarn build
             gh-pages -d build
         env:

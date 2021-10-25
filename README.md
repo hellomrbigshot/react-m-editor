@@ -10,7 +10,7 @@
 ## Install
 
 ```
-yarn add react-m-editor
+yarn add react-m-editor highlight.js marked prop-types
 ```
 
 ## Usage with React
@@ -70,8 +70,8 @@ console.log(marked(a)) // <p><code class="hljs">console.log(&#39;hello world&#39
 | showLineNum| boolean| true        | show side line number |
 | theme      | string | light       | light or dark   |
 | autoScroll | boolean| true        | auto sroll or not |
-| debounce   | boolean | false | debounce render html when edit |
-| debounceWait | number | 200 | debounce wait time |
+| debounceRender   | boolean | false | debounce render html when edit |
+| debounceRenderWait | number | 200 | debounce wait time |
 | onChange   | function ({ content, htmlContent }) | - | callback when editor changes |
 | onModeChange | function (mode, oldMode) | - | callback when editor's mode changes |
 | onFullScreenChange | function (isFullScreen) | - | callback when editor's fullscreen changes |

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, KeyboardEvent, ChangeEvent } from '
 import PropTypes from 'prop-types'
 import markedFun from 'marked'
 import classnames from 'classnames'
-import hljs from './assets/js/hljs'
+import hljs from 'highlight.js'
 import { throttle, debounce as debounceFunc } from 'lodash-es'
 
 import { config } from './assets/js/config'
@@ -25,8 +25,8 @@ export interface EditorProps {
   onModeChange?: Function;
   onChange?: Function;
   contentType?: string;
-  debounce: boolean;
-  debounceWait?: number;
+  debounceRender: boolean;
+  debounceRenderWait?: number;
 }
 
 markedFun.setOptions({
@@ -50,7 +50,7 @@ const betterMarked = (str: string) => { // replace <code> tags to <code class="h
 
 
 function Editor (props: EditorProps) {
-  const { placeholder, theme, showLineNum, value, onFullScreenChange, onModeChange, autoScroll, debounce, debounceWait, onChange } = props
+  const { placeholder, theme, showLineNum, value, onFullScreenChange, onModeChange, autoScroll, debounceRender, debounceRenderWait, onChange } = props
   const [mode, setMode] = useState(props.mode)
   const [fullScreen, setFullScreen] = useState(props.fullScreen)
   const [iconLength, setIconLength] = useState(config.length)
@@ -95,7 +95,7 @@ function Editor (props: EditorProps) {
     onFullScreenChange && onFullScreenChange(full)
   }
   const setHtml = (_value: string) => {
-    if (debounce) {
+    if (debounceRender) {
       debounceMarked.current(_value)
     } else {
       setMarkedHtml(betterMarked(_value))
@@ -103,7 +103,7 @@ function Editor (props: EditorProps) {
   }
   const debounceMarked = useRef(debounceFunc((value) => {
     setMarkedHtml(betterMarked(value))
-  }, debounceWait))
+  }, debounceRenderWait))
   const handleAppendContent = (str: string) => { // append content
     const pos = mTextarea.current!.selectionStart || 0
     if (pos > -1) {
@@ -234,8 +234,8 @@ Editor.propTypes = {
   onChange: PropTypes.func,
   onFullScreenChange: PropTypes.func,
   onModeChange: PropTypes.func,
-  debounce: PropTypes.bool,
-  debounceWait: PropTypes.number
+  debounceRender: PropTypes.bool,
+  debounceRenderWait: PropTypes.number
 }
 
 Editor.defaultProps = {
@@ -247,8 +247,8 @@ Editor.defaultProps = {
   contentType: 'markdown',
   value: '',
   autoScroll: true,
-  debounce: false,
-  debounceWait: 200
+  debounceRender: false,
+  debounceRenderWait: 200
 }
 
 export const MEditor = Editor

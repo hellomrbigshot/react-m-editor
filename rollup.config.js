@@ -10,6 +10,13 @@ import { terser } from 'rollup-plugin-terser'
 
 import pkg from './package.json'
 
+const globals = {
+  'react': 'React',
+  'prop-types': 'PropTypes',
+  'highlight.js': 'hljs',
+  'marked': 'marked'
+}
+
 export default {
   input: 'src/index.tsx',
   output: [
@@ -21,10 +28,7 @@ export default {
       name: 'ReactMEditor',
       file: pkg.unpkg,
       format: 'umd',
-      globals: {
-        'react': 'React',
-        'prop-types': 'PropTypes'
-      },
+      globals,
       plugins: [
         terser()
       ]

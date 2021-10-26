@@ -9,22 +9,22 @@ on:
     - main
 
 jobs:
-  # publish-npm:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 14
-  #         registry-url: https://registry.npmjs.org/
-  #     - run: yarn install
-  #     - run: yarn build
-  #     - run: yarn publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: yarn
+      - run: yarn build
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   create-githubpage:
-    # needs: publish-npm
+    needs: publish-npm
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,14 +34,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - name: package build
-        run: |
-            yarn install
-            yarn build
       - name: page build
         working-directory: ./example
         run: |
-            yarn install
+            yarn
+            yarn add react-m-editor
             yarn build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

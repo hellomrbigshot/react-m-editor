@@ -1,10 +1,11 @@
 {
   "name": "react-m-editor",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "A markdown editor with React.js",
   "author": "hellomrbigshot",
   "license": "MIT",
   "repository": "hellomrbigshot/react-m-editor",
+  "homepage": "https://hellomrbigshot.github.io/react-m-editor/",
   "main": "dist/index.js",
   "unpkg": "dist/index.min.js",
   "module": "dist/index.es.js",
@@ -24,8 +25,8 @@
     "highlight.js": "^11.0.0",
     "marked": "^3.0.7",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

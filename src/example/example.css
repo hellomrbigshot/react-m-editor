@@ -1,0 +1,75 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.app {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: #2c3e50;
+}
+
+.app-logo {
+  animation: app-logo-spin infinite 20s linear;
+  height: 15vmin;
+  pointer-events: none;
+}
+
+.app-header {
+  min-height: 25vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.app-link {
+  color: #61dafb;
+}
+.theme-button {
+  cursor: pointer;
+  padding: 5px;
+  background: #fff;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 2px #666;
+  border-radius: 3px;
+  color: #2c3e50;
+  font-size: 14px;
+  width: 100px;
+}
+.theme-button:hover {
+  background: #efefef;
+}
+.theme-button:active, .theme-button:focus {
+  outline: none;
+  border: none;
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes app-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

@@ -13,8 +13,11 @@ import rust from 'highlight.js/lib/languages/rust'
 import stylus from 'highlight.js/lib/languages/stylus'
 import typescript from 'highlight.js/lib/languages/typescript'
 import xml from 'highlight.js/lib/languages/xml'
+import plaintext from 'highlight.js/lib/languages/plaintext'
+import diff from 'highlight.js/lib/languages/diff'
+import type { LanguageFn } from 'highlight.js'
 
-const languagesMapping = {
+const languagesMapping: Record<string, LanguageFn> = {
   javascript,
   java,
   css,
@@ -28,7 +31,9 @@ const languagesMapping = {
   rust,
   stylus,
   typescript,
-  xml
+  xml,
+  plaintext,
+  diff
 }
 
 Object.keys(languagesMapping).forEach(language => {

@@ -10,7 +10,14 @@
 ## Install
 
 ```
+// npm
+npm install -S react-m-editor highlight.js marked prop-types
+
+// yarn
 yarn add react-m-editor highlight.js marked prop-types
+
+// pnpm
+pnpm install react-m-editor highlight.js marked prop-types
 ```
 
 ## Usage with React

@@ -22,7 +22,7 @@ jobs:
       - name: Use Pnpm ➕
         uses: pnpm/action-setup@v3
         with:
-          version: 6
+          version: 8
           run_install: false
       
       - name: Install and Build 🔧

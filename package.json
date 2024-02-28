@@ -1,6 +1,6 @@
 {
   "name": "react-m-editor",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "type": "module",
   "main": "dist/react-m-editor.umd.js",
   "module": "dist/react-m-editor.mjs",

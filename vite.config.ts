@@ -12,6 +12,7 @@ const globals = {
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const config = {
+    base: './',
     plugins: [react()],
   }
   if (mode === 'gh-pages') {
